@@ -30,6 +30,11 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 
+var User = require('./models/user');
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
